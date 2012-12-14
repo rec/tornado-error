@@ -22,6 +22,8 @@ class ErrorHandler(tornado.web.RequestHandler):
 
   def get_error_html(self, status_code, **kwds):
     try:
+      # self.require_setting('static_path')
+      # TODO: why does require_setting fail when I clearly DO have a static path?
       filename = os.path.join(self.settings['static_path'], '%d.html' % status_code)
       with open(filename) as f:
         return f.read()
@@ -32,4 +34,5 @@ class ErrorHandler(tornado.web.RequestHandler):
 
   def prepare(self):
     raise tornado.web.HTTPError(self._status_code)
+
 
